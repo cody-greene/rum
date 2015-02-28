@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 var extName = require('path').extname
 var spawn = require('child_process').spawn
@@ -7,7 +8,7 @@ var createReloadServer = require('./reload-server')
 
 // Collect all cli flags
 var options = process.argv.slice(2)
-  .filter(function hasDash(val) { return val.chatAt(0) === '-' })
+  .filter(function hasDash(val) { return val.charAt(0) === '-' })
   .reduce(function toKeyVal(acc, opt) {
     var parts = opt.split('=')
     acc[parts[0]] = parts[1] || true
@@ -35,20 +36,16 @@ var lrServer = !isNaN(lrPort) && createReloadServer(lrPort, function () {
   stdlog.info('live-reload server running on port ' + lrPort)
 })
 
-runSequence(tasks.all)
-if (watchedFiles) watch(watchedFiles.split(',').trim(), function filter(fileName) {
-  runSequence(extName(fileName), lrServer && lrServer.reload)
-})
-
 // Start a package script a.k.a 'npm run TASK'
 // and invoke the callback when it exits sucessfully
 // Will kill/restart a script if it's already running
-npm.procs = {}
+var procs = {}
 function npm(task, callback) {
-  if (npm.procs[task]) npm.procs[task].kill()
+  if (procs[task]) procs[task].kill()
   var start = Date.now()
-  npm.procs[task] = spawn('npm', ['run', task, '--silent'], {stdio: 'inherit'})
+  procs[task] = spawn('npm', ['run', task, '--silent'], {stdio: 'inherit'})
     .on('exit', function success(code) {
+      procs[task] = null
       if (code === 0) {
         stdlog.info('completed %s in %sms', task, Date.now() - start)
         if (callback) callback()
@@ -59,8 +56,17 @@ function npm(task, callback) {
 // Run several package scripts in sequence,
 // and invoke the callback when they've all completed successfully
 function runSequence(queue, callback) {
-  if (queue && queue.length)
+  if (queue.length)
     npm(queue.shift(), runSequence.bind(null, queue, callback))
   else if (callback)
     callback()
 }
+
+runSequence(tasks.all)
+if (watchedFiles) watch(watchedFiles.split(','), function filter(fileName) {
+  var queue = tasks[extName(fileName)]
+  if (queue) {
+    stdlog.debug('watcher:', fileName)
+    runSequence(queue, lrServer && lrServer.reload)
+  }
+})

@@ -29,7 +29,6 @@ var memo = {
 var fileNameCache = {
   _cache: {},
   push: function addFileName(name) {
-    console.info('fileNameCache', name)
     this._cache[name] = true
   },
   clear: function forEachFileName(iterator) {

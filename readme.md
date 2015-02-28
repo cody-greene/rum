@@ -1,4 +1,4 @@
-### Usage
+### What is this, I don't even
 ```
 rum <npm_script>[:ext1,ext2] <npm_script> ...
 ```
@@ -7,16 +7,16 @@ Run your package.json scripts by watching for changes to your source code. Provi
 {
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
-    "js-dev": "browserify -d node_modules/rum/reload-client ./src >dist/index.js",
-    "js-prod": "browserify ./src | uglifyjs -cm | gzip >dist/index.js.gz",
-    "css-dev": "lessc src/index.less >dist/index.css",
-    "css-prod": "lessc src/index.less | cleancss --s0 | gzip >dist/index.css.gz"
+    "code-dev": "browserify -d node_modules/rum/reload-client ./src >dist/index.js",
+    "code-prod": "browserify ./src | uglifyjs -cm | gzip >dist/index.js.gz",
+    "style-dev": "lessc src/index.less >dist/index.css",
+    "style-prod": "lessc src/index.less | cleancss --s0 | gzip >dist/index.css.gz"
 
     // Watch for changes and start a reload-server
-    "test": "rum clean --watch=./src js-dev:js,jsx css-dev:less --port=9093",
+    "test": "rum clean --watch=./src code-dev:js,jsx style-dev:less --port=9093",
 
     // Just run a few scripts in sequence, then exit
-    "start": "rum clean js-prod css-prod"
+    "start": "rum clean code-prod style-prod"
   },
   "devDependencies": {
     "browserify": "latest",
@@ -27,6 +27,9 @@ Run your package.json scripts by watching for changes to your source code. Provi
   }
 }
 ```
+
+### Writing tasks
+Add an entry to the [scripts field](https://docs.npmjs.com/misc/scripts) of `package.json`. Want to run that script whenever you make changes to a `.js` file in the `src/` directory? Try `rum task_name:js --watch=src`. Additional comma-separated file extensions are encouraged! When a task is not assigned to any file extensions it will only be run once during initialization. In fact, all tasks will be run at least once, and in the order they are given. 
 
 ### Options
 `-p, --port=<port_number>` Create a live-reload server on the given port
