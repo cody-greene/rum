@@ -1,0 +1,8 @@
+{
+  "name": "rum",
+  "version": "0.0.0",
+  "private": true,
+  "bin": "./cli.js",
+  "dependencies": {},
+  "devDependencies": {}
+}
