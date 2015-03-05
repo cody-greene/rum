@@ -4,7 +4,7 @@ var createHTTPServer = require('http').createServer
 // Signal a page reload with `server.reload()`
 // https://developer.mozilla.org/en-US/docs/Server-sent_events
 module.exports = function createReloadServer(port, readyCallback) {
-  var liveSocket = null
+  var liveSocket
   var server = createHTTPServer()
     .listen(port, readyCallback)
     .on('request', function router(req, res) {
@@ -16,8 +16,10 @@ module.exports = function createReloadServer(port, readyCallback) {
         'connection': 'close'
       })
       res.write('retry:1000\n')
-      res.on('close', function () { liveSocket = null })
+      res.on('close', onClose)
     })
+
+  function onClose() {liveSocket = null}
 
   server.reload = function sendReload() {
     if (liveSocket) liveSocket.write('event: reload\ndata:\n\n')

@@ -5,35 +5,37 @@ var spawn = require('child_process').spawn
 var watch = require('./watch')
 var stdlog = require('./console')
 var createReloadServer = require('./reload-server')
-
-// Collect all cli flags
-var options = process.argv.slice(2)
-  .filter(function hasDash(val) { return val.charAt(0) === '-' })
-  .reduce(function toKeyVal(acc, opt) {
-    var parts = opt.split('=')
-    acc[parts[0]] = parts[1] || true
-    return acc
-  }, {})
+var argv = require('yargs')
+  .usage('rum <npm_script> <npm_script>[:ext1,ext2]', {
+    'watch': {
+      alias: 'w',
+      type: 'array',
+      describe: 'Monitor changes in the given comma-separated directories (recursive)'
+    },
+    port: {
+      alias: 'p',
+      type: 'number',
+      describe: 'Create a live-reload server on the given port'
+    }
+  })
+  .strict()
+  .argv
 
 // Sort package scripts into a task queue for each file extension
-var tasks = process.argv.slice(2)
-  .filter(function noDash(val) { return val.charAt(0) !== '-' })
-  .reduce(function toKeyVal(acc, opt) {
-    var parts = opt.split(':')
-    var task = parts[0]
-    acc.all.push(task)
-    if (parts[1]) parts[1].split(',').forEach(function enqueue(ext) {
-      ext = '.' + ext
-      if (!acc[ext]) acc[ext] = []
-      acc[ext].push(task)
-    })
-    return acc
-  }, {all: []})
+var tasks = argv._.reduce(function toKeyVal(acc, opt) {
+  var parts = opt.split(':')
+  var task = parts[0]
+  acc.all.push(task)
+  if (parts[1]) parts[1].split(',').forEach(function enqueue(ext) {
+    ext = '.' + ext.trim()
+    if (!acc[ext]) acc[ext] = []
+    acc[ext].push(task)
+  })
+  return acc
+}, {all: []})
 
-var watchedFiles = options['-w'] || options['--watch']
-var lrPort = parseInt(options['-p'] || options['--port'])
-var lrServer = !isNaN(lrPort) && createReloadServer(lrPort, function () {
-  stdlog.info('live-reload server running on port ' + lrPort)
+var lrServer = !isNaN(argv.port) && createReloadServer(argv.port, function () {
+  stdlog.info('live-reload server running on port ' + argv.port)
 })
 
 // Start a package script a.k.a 'npm run TASK'
@@ -57,13 +59,13 @@ function npm(task, callback) {
 // and invoke the callback when they've all completed successfully
 function runSequence(queue, callback) {
   if (queue.length)
-    npm(queue.shift(), runSequence.bind(null, queue, callback))
+    npm(queue[0], runSequence.bind(null, queue.slice(1), callback))
   else if (callback)
     callback()
 }
 
 runSequence(tasks.all)
-if (watchedFiles) watch(watchedFiles.split(','), function filter(fileName) {
+if (argv.watch) watch(argv.watch, function filter(fileName) {
   var queue = tasks[extName(fileName)]
   if (queue) {
     stdlog.debug('watcher:', fileName)

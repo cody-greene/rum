@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "bin": "./cli.js",
-  "dependencies": {},
+  "dependencies": {
+    "yargs": "^3.4.5"
+  },
   "devDependencies": {}
 }
