@@ -7,6 +7,7 @@ File extensions:
   and it will run whenever a matching file is updated.
 
 Options:
+  --spawn, -s  Spawn a long-running task outside of the init queue
   --watch, -w  Monitor changes in the given directory (recursive),
                can be used more than once
   --port, -p   Create a live-reload server on the given port
@@ -38,4 +39,4 @@ Run your package.json scripts by watching for changes to your source code. Provi
 ```
 
 ### Writing tasks
-Add an entry to the [scripts field](https://docs.npmjs.com/misc/scripts) of `package.json`. Want to run that script whenever you make changes to a `.js` file in the `src/` directory? Try `rum task_name:js --watch src`. When a task is not assigned to any file extensions it will only be run once during initialization. In fact, all tasks will be run at least once, and in the order they are given. An long-running process, like a file server, should be last or end up blocking everything else in the queue.
+Add an entry to the [scripts field](https://docs.npmjs.com/misc/scripts) of `package.json`. Want to run that script whenever you make changes to a `.js` file in the `src/` directory? Try `rum task_name:js --watch src`. When a task is not assigned to any file extensions it will only be run once during initialization. In fact, all tasks will be run at least once, and in the order they are given. A long-running process, like a file server, should be last or end up blocking everything else in the queue.

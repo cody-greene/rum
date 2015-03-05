@@ -7,6 +7,11 @@ var stdlog = require('./console')
 var createReloadServer = require('./reload-server')
 var argv = require('yargs')
   .usage('rum <npm_script> <npm_script>[:ext1,ext2]', {
+    'spawn': {
+      alias: 's',
+      type: 'array',
+      describe: 'Spawn a long-running task outside of the init queue'
+    },
     'watch': {
       alias: 'w',
       type: 'array',
@@ -64,6 +69,7 @@ function runSequence(queue, callback) {
     callback()
 }
 
+if (argv.spawn) argv.spawn.forEach(function (task) {npm(task)})
 runSequence(tasks.all)
 if (argv.watch) watch(argv.watch, function filter(fileName) {
   var queue = tasks[extName(fileName)]
