@@ -4,6 +4,7 @@
   "private": true,
   "bin": "./cli.js",
   "dependencies": {
+    "node-watch": "^0.3.4",
     "yargs": "^3.4.5"
   },
   "devDependencies": {}

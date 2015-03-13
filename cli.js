@@ -2,7 +2,7 @@
 'use strict';
 var extName = require('path').extname
 var spawn = require('child_process').spawn
-var watch = require('./watch')
+var watch = require('node-watch')
 var stdlog = require('./console')
 var createReloadServer = require('./reload-server')
 var argv = require('yargs')
