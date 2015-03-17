@@ -15,6 +15,9 @@ Options:
 Run your package.json scripts by watching for changes to your source code. Provides an optional live-reload server and client-side snippet. This is an easy way to define automatic, incremental builds during development. Also useful as a shorthand when composing package scripts. There's no need for additional grunt/gulp plugins and configuration hell; use your tools directly! Just define `package.json` like so:
 ```
 {
+  "config": {
+    "reload_port: 9093
+  },
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
     "code-dev": "browserify -d node_modules/rum/reload-client ./src >dist/index.js",
@@ -23,7 +26,7 @@ Run your package.json scripts by watching for changes to your source code. Provi
     "style-prod": "lessc src/index.less | cleancss --s0 | gzip >dist/index.css.gz"
 
     // Watch for changes and start a reload-server
-    "test": "rum clean --watch=./src code-dev:js,jsx style-dev:less --port=9093",
+    "test": "rum clean --watch ./src code-dev:js,jsx style-dev:less --port $npm_package_config_reload_port",
 
     // Just run a few scripts in sequence, then exit
     "start": "rum clean code-prod style-prod"
