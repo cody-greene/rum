@@ -5,14 +5,20 @@ var spawn = require('child_process').spawn
 var watch = require('node-watch')
 var stdlog = require('./console')
 var createReloadServer = require('./reload-server')
+var arrayPush = Array.prototype.push
 var argv = require('yargs')
   .usage('rum <npm_script> <npm_script>[:ext1,ext2]', {
-    'spawn': {
+    node: {
+      alias: 'n',
+      type: 'array',
+      describe: 'Spawn multiple node processes which may be restarted'
+    },
+    spawn: {
       alias: 's',
       type: 'array',
       describe: 'Spawn a long-running task outside of the init queue'
     },
-    'watch': {
+    watch: {
       alias: 'w',
       type: 'array',
       describe: 'Monitor changes in the given comma-separated directories (recursive)'
@@ -39,6 +45,19 @@ var tasks = argv._.reduce(function toKeyVal(acc, opt) {
   return acc
 }, {all: []})
 
+var nodes = (argv.node || []).reduce(function (acc, opt) {
+  var parts = opt.split(':')
+  var modules = parts[0].split(',')
+  var extensions = parts[1]
+  arrayPush.apply(acc.all, modules)
+  if (extensions) extensions.split(',').forEach(function (ext) {
+    ext = '.' + ext.trim()
+    if (!acc[ext]) acc[ext] = []
+    arrayPush.apply(acc[ext], modules)
+  })
+  return acc
+}, {all: []})
+
 var lrServer = !isNaN(argv.port) && createReloadServer(argv.port, function () {
   stdlog.info('live-reload server running on port ' + argv.port)
 })
@@ -60,6 +79,19 @@ function npm(task, callback) {
     })
 }
 
+function spawnNode(moduleName) {
+  procs[moduleName] = spawn('node', [moduleName], {stdio: 'inherit'})
+    .on('exit', function () {procs[moduleName] = null})
+}
+
+function respawnNode(moduleName) {
+  if (procs[moduleName]) procs[moduleName]
+    .removeAllListeners('exit') // remove previous listener with rapid respawn attempts
+    .on('exit', spawnNode.bind(null, moduleName))
+    .kill()
+  else spawnNode(moduleName)
+}
+
 // Run several package scripts in sequence,
 // and invoke the callback when they've all completed successfully
 function runSequence(queue, callback) {
@@ -71,10 +103,12 @@ function runSequence(queue, callback) {
 
 if (argv.spawn) argv.spawn.forEach(function (task) {npm(task)})
 runSequence(tasks.all)
+nodes.all.forEach(spawnNode)
 if (argv.watch) watch(argv.watch, function filter(fileName) {
-  var queue = tasks[extName(fileName)]
-  if (queue) {
-    stdlog.debug('watcher:', fileName)
-    runSequence(queue, lrServer && lrServer.reload)
-  }
+  var ext = extName(fileName)
+  var queue = tasks[ext]
+  var list = nodes[ext]
+  if (list || queue) stdlog.info('watcher:', fileName)
+  if (list) list.forEach(respawnNode)
+  if (queue) runSequence(queue, lrServer && lrServer.reload)
 })
