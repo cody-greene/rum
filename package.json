@@ -1,11 +1,14 @@
 {
   "name": "rum",
   "version": "0.0.0",
-  "private": true,
+  "description": "Incremental build tool using your own npm package scripts",
+  "author": "Cody Greene <cody@dudewoah.com>",
+  "keywords": ["build", "incremental", "reload", "watch", "spawn"],
+  "repository": {"type": "git", "url": "http://github.com/cody-greene/rum.git"},
+  "license": "MIT",
   "bin": "./cli.js",
   "dependencies": {
     "node-watch": "^0.3.4",
     "yargs": "^3.4.5"
-  },
-  "devDependencies": {}
+  }
 }
