@@ -1,23 +1,27 @@
 {
   "name": "rum",
-  "version": "0.0.2",
-  "description": "Incremental build tool using your own npm package scripts",
+  "version": "1.0.0",
+  "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
+  "keywords": ["build", "incremental", "reload", "refresh", "watch", "spawn", "server", "tool", "cli"],
   "author": "Cody Greene <cody@dudewoah.com>",
-  "keywords": [
-    "build",
-    "incremental",
-    "reload",
-    "watch",
-    "spawn"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/cody-greene/rum.git"
-  },
+  "repository": "cody-greene/rum",
   "license": "MIT",
-  "bin": "./cli.js",
+  "engines": {"node": "^4.0.0"},
+  "main": "lib/index.js",
+  "bin": "lib/cli.js",
+  "eslintConfig": {
+    "extends": "./node_modules/eslint-config/eslintrc.yml",
+    "env": {
+      "browser": false,
+      "es6": true
+    }
+  },
   "dependencies": {
-    "node-watch": "^0.3.4",
-    "yargs": "^3.4.5"
+    "connect-gzip-static": "^1.0.0",
+    "node-watch": "~0.3.4",
+    "yargs": "^3.29.0"
+  },
+  "devDependencies": {
+    "eslint-config": "cody-greene/eslint-config#v0.1.1"
   }
 }
