@@ -1,4 +1,3 @@
-```
 rum <static_dir> <outfile> [-- <browserify>]
   Watchify plus static file server plus auto-reload.
 
@@ -29,4 +28,3 @@ Watch scss:
   rum -w 'src/**/*.scss' -x 'make dist/bundle.css' dist dist/bundle.js -- src/index.js
 More browserify options:
   rum dist dist/bundle.js -- src/index.js -t babelify -t [envify purge]
-```

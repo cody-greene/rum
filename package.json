@@ -1,27 +1,29 @@
 {
-  "name": "rum",
-  "version": "1.0.0",
-  "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
-  "keywords": ["build", "incremental", "reload", "refresh", "watch", "spawn", "server", "tool", "cli"],
   "author": "Cody Greene <cody@dudewoah.com>",
-  "repository": "cody-greene/rum",
-  "license": "MIT",
-  "engines": {"node": "^4.0.0"},
-  "main": "lib/index.js",
   "bin": "lib/cli.js",
+  "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
+  "engines": {"node": ">=4.0.0", "npm": ">=3.0.0"},
+  "files": "lib/",
+  "keywords": ["build", "incremental", "live-reload", "browserify", "watchify", "spawn", "server", "tool", "cli"],
+  "license": "MIT",
+  "main": "lib/client.js",
+  "name": "rum",
+  "repository": "cody-greene/rum",
+  "version": "2.0.0",
   "eslintConfig": {
-    "extends": "./node_modules/eslint-config/eslintrc.yml",
+    "extends": "./node_modules/eslint-config/strict.yml",
     "env": {
-      "browser": false,
+      "node": true,
       "es6": true
     }
   },
   "dependencies": {
+    "browserify": "^13.0.0",
+    "chokidar": "^1.4.0",
     "connect-gzip-static": "^1.0.0",
-    "node-watch": "~0.3.4",
-    "yargs": "^3.29.0"
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "eslint-config": "cody-greene/eslint-config#v0.1.1"
+    "eslint-config": "cody-greene/eslint-config#v2.2.0"
   }
 }
