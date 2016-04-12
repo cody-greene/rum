@@ -9,7 +9,7 @@
   "main": "lib/client.js",
   "name": "rum",
   "repository": "cody-greene/rum",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "eslintConfig": {
     "extends": "./node_modules/eslint-config/strict.yml",
     "env": {
