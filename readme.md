@@ -1,10 +1,10 @@
 ```
-rum <static_dir> <outfile> [-- <browserify>]
+rum [<static_dir>] <outfile> [-- <browserify>]
   Watchify plus static file server plus auto-reload.
 
 Options:
   <static_dir>  Directory of static files to serve, images/fonts
-                [default: "."]
+                If omitted, the server is disabled
 
   <outfile>     Required. Where to dump the browserify bundle
 
