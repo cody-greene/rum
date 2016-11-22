@@ -1,3 +1,8 @@
+# v2.2.0
+- fix `--help` text
+- clear queued `--exec` tasks on build errors
+- omit the useless stack trace from failed `--exec` tasks
+
 # v2.1.0
 `<static_dir>` is now optional, disabling the server if omitted.
 
