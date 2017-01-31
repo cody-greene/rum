@@ -1,3 +1,6 @@
+# 2017-01-31 v2.2.1
+- build completion messages now contain a timestamp
+
 # v2.2.0
 - fix `--help` text
 - clear queued `--exec` tasks on build errors
