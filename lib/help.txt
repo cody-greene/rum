@@ -9,18 +9,15 @@ Options:
 
   <browserify>  Arguments after the '--' will be passed along to browserify
 
-  --exec, -x    Shell command to run on each update (before reload) [string]
+  --exec, -x    Shell command to run on each update (before reload)
 
-  --watch, -w   Watch glob(s) for triggering --exec      [string]
+  --watch, -w   Watch glob(s) for triggering --exec
                 Can use this multiple times.
                 [default: bundle dependencies]
 
-  --port, -p    Bind server to this port instead of a random one   [string]
+  --port, -p    Bind server to this port instead of a random one
 
-  --icon, -i    Use a custom favicon                                [string]
-                [default: "rum/lib/favicon.ico"]
-
- --version, -v Show version number                                 [boolean]
+  --version, -v Show version number
 
 Basic usage:
   rum dist dist/bundle.js -- src/index.js
