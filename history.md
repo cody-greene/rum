@@ -1,3 +1,7 @@
+# 2017-02-23 v3.0.0
+- you can now supply multiple `--exec` options with their own watch patterns
+- removed the `--icon` option
+
 # 2017-01-31 v2.2.1
 - build completion messages now contain a timestamp
 
