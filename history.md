@@ -1,3 +1,11 @@
+# 2017-06-09 v4.0.0
+- add the `--router <filepath>` option which redirects all requests to *filepath*. Use this if you've got client-side routing and want to avoid 404s
+
+Upgrade dependencies:
+- browserify@14.x (drops IE10 support)
+- connect-gzip-static@2.x (adds brotli support)
+- add a test or two
+
 # 2017-02-23 v3.0.0
 - you can now supply multiple `--exec` options with their own watch patterns
 - removed the `--icon` option

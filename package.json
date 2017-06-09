@@ -2,14 +2,17 @@
   "author": "Cody Greene <cody@dudewoah.com>",
   "bin": "lib/cli.js",
   "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
-  "engines": {"node": ">=4.0.0", "npm": ">=3.0.0"},
+  "engines": {"node": ">4.0.0", "npm": ">3.0.0"},
   "files": "lib/",
   "keywords": ["build", "incremental", "live-reload", "browserify", "watchify", "spawn", "server", "tool", "cli"],
   "license": "MIT",
   "main": "lib/client.js",
   "name": "rum",
   "repository": "cody-greene/rum",
-  "version": "3.0.0",
+  "scripts": {
+    "test": "mocha -bR tap"
+  },
+  "version": "4.0.0",
   "eslintConfig": {
     "extends": "./node_modules/@cody-greene/eslint-config/strict.yml",
     "env": {
@@ -18,12 +21,13 @@
     }
   },
   "dependencies": {
-    "browserify": "^13.0.0",
+    "browserify": "^14.0.0",
     "chokidar": "^1.4.0",
-    "connect-gzip-static": "^1.0.0",
+    "connect-gzip-static": "^2.0.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "@cody-greene/eslint-config": "2.13.0"
+    "@cody-greene/eslint-config": "3.3.1",
+    "mocha": "^3.4.2"
   }
 }
