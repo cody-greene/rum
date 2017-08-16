@@ -1,3 +1,6 @@
+# 2017-08-16 v4.0.2
+- don't crash the client on IE
+
 # 2017-06-09 v4.0.0
 - add the `--router <filepath>` option which redirects all requests to *filepath*. Use this if you've got client-side routing and want to avoid 404s
 
