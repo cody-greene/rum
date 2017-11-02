@@ -2,7 +2,7 @@
   "author": "Cody Greene <cody@dudewoah.com>",
   "bin": "lib/cli.js",
   "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
-  "engines": {"node": ">4.0.0", "npm": ">3.0.0"},
+  "engines": {"node": ">4.0.0"},
   "files": "lib/",
   "keywords": ["build", "incremental", "live-reload", "browserify", "watchify", "spawn", "server", "tool", "cli"],
   "license": "MIT",
@@ -12,7 +12,7 @@
   "scripts": {
     "test": "mocha -bR tap"
   },
-  "version": "4.0.2",
+  "version": "4.1.0",
   "eslintConfig": {
     "extends": "./node_modules/@cody-greene/eslint-config/strict.yml",
     "env": {

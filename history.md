@@ -1,3 +1,6 @@
+# 2017-11-02 v4.1.0
+- client module exports `connect()` and `disconnect()`
+
 # 2017-08-16 v4.0.2
 - don't crash the client on IE
 
