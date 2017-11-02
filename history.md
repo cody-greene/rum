@@ -1,4 +1,4 @@
-# 2017-11-02 v4.1.0
+# 2017-11-02 v4.1.1
 - client module exports `connect()` and `disconnect()`
 
 # 2017-08-16 v4.0.2
