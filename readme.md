@@ -66,3 +66,6 @@ function reloadCSS(href) {
   }
 }
 ```
+
+#### Using VIM?
+You may need to add `set backupcopy=yes` to your vimrc. The default method of saving files does not play nicely with filewatchers like chokidar.

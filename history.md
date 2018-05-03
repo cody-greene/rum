@@ -1,3 +1,8 @@
+# 2018-05-03 v5.0.0
+- browserify `^16.2.0`
+- chokidar `^2.0.2`
+- Breaking: Upgrade globbing dependencies which require globs to be more strict and always use POSIX-style slashes because Windows-style slashes are used as escape sequences
+
 # 2017-11-02 v4.1.1
 - client module exports `connect()` and `disconnect()`
 
