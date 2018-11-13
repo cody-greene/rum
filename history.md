@@ -1,3 +1,6 @@
+# 2018-11-12 v5.1.0
+- can bind to a specific network interface with `--port [addr:]port`
+
 # 2018-05-03 v5.0.0
 - browserify `^16.2.0`
 - chokidar `^2.0.2`

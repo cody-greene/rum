@@ -20,7 +20,8 @@ Options:
                 Will apply to the next --exec argument or to the
                 browserify watcher if one is not found.
 
-  --port, -p    Bind server to this port instead of a random one
+  --port, -p    Bind server to this [address:]port instead of 0.0.0.0 and
+                and random port
 
   --version, -v Show version number
 
