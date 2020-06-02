@@ -1,5 +1,5 @@
 {
-  "author": "Cody Greene <cody@dudewoah.com>",
+  "author": "Cody Greene <cody@variable.run>",
   "bin": "lib/cli.js",
   "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
   "engines": {
@@ -17,7 +17,7 @@
     "tool",
     "cli"
   ],
-  "license": "MIT",
+  "license": "Unlicense",
   "main": "lib/client.js",
   "name": "rum",
   "repository": {
@@ -27,7 +27,7 @@
   "scripts": {
     "test": "mocha -bR tap"
   },
-  "version": "5.0.0",
+  "version": "6.0.0",
   "eslintConfig": {
     "extends": "./node_modules/@cody-greene/eslint-config/strict.yml",
     "env": {

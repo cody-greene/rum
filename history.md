@@ -1,3 +1,7 @@
+# 2020-06-01 v6.0.0
+- use the Unlicense license
+- upgrade to chokidar 3.x
+
 # 2018-11-12 v5.1.0
 - can bind to a specific network interface with `--port [addr:]port`
 
