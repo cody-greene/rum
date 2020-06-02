@@ -23,6 +23,10 @@ Options:
   --port, -p    Bind server to this [address:]port instead of 0.0.0.0 and
                 and random port
 
+  --router, -r  Redirect all requests to this path but keep the
+                displayed url unchanged. Use this if you've got
+                client-side routing and want to avoid 404s.
+
   --version, -v Show version number
 
 Basic usage:
