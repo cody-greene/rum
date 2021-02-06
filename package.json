@@ -2,9 +2,6 @@
   "author": "Cody Greene <cody@variable.run>",
   "bin": "lib/cli.js",
   "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
-  "engines": {
-    "node": ">4.0.0"
-  },
   "files": "lib/",
   "keywords": [
     "build",
@@ -27,7 +24,7 @@
   "scripts": {
     "test": "mocha -bR tap"
   },
-  "version": "6.0.0",
+  "version": "7.0.0",
   "eslintConfig": {
     "extends": "./node_modules/@cody-greene/eslint-config/strict.yml",
     "env": {
@@ -36,13 +33,13 @@
     }
   },
   "dependencies": {
-    "browserify": "^16.2.0",
+    "browserify": "^17.0.0",
     "chokidar": "^3.0.0",
     "connect-gzip-static": "^2.0.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
     "@cody-greene/eslint-config": "3.3.1",
-    "mocha": "^7.2.0"
+    "mocha": "^8.2.0"
   }
 }

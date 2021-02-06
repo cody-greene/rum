@@ -1,3 +1,6 @@
+# 2021-01-06 v7.0.0
+- upgrade to browserify 17
+
 # 2020-06-01 v6.0.0
 - use the Unlicense license
 - upgrade to chokidar 3.x
