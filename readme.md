@@ -1,53 +1,73 @@
+Watchify plus static file server plus auto-reload.
+
+esbuild wrapper with:
+- chokidar for efficient file watching, where esbuild only uses polling
+- http server
+- page refresh when files change
+- css hot-reload
+
 ```
-rum [<static_dir>] <outfile> [-- <browserify>]
-  Watchify plus static file server plus auto-reload.
+const rumServerStart = require('rum')
 
-Options:
-  <static_dir>  Directory of static files to serve, images/fonts
-                If omitted, the server is disabled
+rumServerStart({
+  serverRoot: './build',
+  jobs: [
+    {cmd: './make-css.sh', pattern: 'src/**/*.scss'}
+  ],
+  esbuildOptions: {
+    entryPoints: ['src/app.js'],
+    outfile: './build/bundle.js',
+    bundle: true,
+  }
+})
 
-  <outfile>     Required. Where to dump the browserify bundle
+type Options = {
+  // Alternative way to set the http server port
+  // default: random
+  port?: string,
 
-  <browserify>  Arguments after the '--' will be passed along to browserify
+  // Bind server to this address:port
+  // default: '0.0.0.0:<random>'
+  addr?: string,
 
-  --exec, -x    Shell command to run on each update before browserify,
-                and before reload. Will capture any preceeding
-                --watch arguments, which are not already captured by
-                another --exec. Can use this multiple times.
+  // Redirect all requests to this path but keep the displayed url unchanged.
+  // Use this if you've got client-side routing and want to avoid 404s
+  // when refreshing.
+  // default: undefined
+  router?: string,
 
-  --watch, -w   Additional glob pattern to monitor for changes.
-                Can use this multiple times. Position is important.
-                Will apply to the next --exec argument or to the
-                browserify watcher if one is not found.
+  // Root directory of http server. If undefined, the server is disabled.
+  // default: undefined
+  serverRoot?: string,
 
-  --port, -p    Bind server to this [address:]port instead of 0.0.0.0 and
-                and random port
+  // Shell commands to run on each update, before esbuild.
+  // - commands with a pattern will only execute when a file matching the pattern has changed
+  // - commands without a pattern will execute when esbuild is about to run
+  // - patterns without a command will apply to the esbuild watcher
+  // default: undefined
+  jobs?: Array<{cmd?: string, pattern?: string}>,
 
-  --router, -r  Redirect all requests to this path but keep the
-                displayed url unchanged. Use this if you've got
-                client-side routing and want to avoid 404s.
-
-  --version, -v Show version number
-
-Basic usage:
-  rum dist dist/bundle.js -- src/index.js
-Watch scss:
-  rum -w 'src/**/*.scss' -x 'make dist/bundle.css' dist dist/bundle.js -- src/index.js
-More browserify options:
-  rum dist dist/bundle.js -- src/index.js -t babelify -t [envify purge]
+  // passed through to esbuild.build()
+  esbuildOptions: any
+}
 ```
 
-You can also listen for reload events in your browser bundle and do something special that depends on the file name. For example, you can hot reload stylesheets like this:
+You can also listen for reload events in your browser bundle and do something special that depends on the file name. For example, you can hot reload stylesheets by including this in your bundle:
 ```javascript
-// $ rum dist dist/index.js -w 'src/**/*.scss' -x 'make dist/bundle.css' -- src/hot-css.js src/app.js
-
 // src/hot-css.js
-require('rum').on('reload', function (files) {
+import rum from 'rum'
+rum.addEventListener('reload', (evt) => {
+  // list of absolute paths that have changed
+  const files = evt.detail
+
   for (let index = 0; index < files.length; ++index) {
     if (!/\.(scss|sass|less|css)$/.test(files[index])) {
-      return window.location.reload(true)
+      return
     }
   }
+
+  // don't let rum refresh the page
+  evt.preventDefault()
 
   // Only the css was changed. Time for hot reload!
   reloadCSS('index.css')

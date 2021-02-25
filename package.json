@@ -1,45 +1,38 @@
 {
-  "author": "Cody Greene <cody@variable.run>",
-  "bin": "lib/cli.js",
-  "description": "Combines a static webserver with a file watcher to automatically rebuild and refresh your web app",
-  "files": "lib/",
-  "keywords": [
-    "build",
-    "incremental",
-    "live-reload",
-    "browserify",
-    "watchify",
-    "spawn",
-    "server",
-    "tool",
-    "cli"
-  ],
+  "name": "@cody-greene/esthulu",
+  "description": "Combines esbuild with a webserver and a file watcher to automatically rebuild and refresh your web app",
   "license": "Unlicense",
-  "main": "lib/client.js",
-  "name": "rum",
+  "version": "1.0.0",
+  "files": [
+    "lib/"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cody-greene/rum.git"
   },
-  "scripts": {
-    "test": "mocha -bR tap"
-  },
-  "version": "7.0.0",
-  "eslintConfig": {
-    "extends": "./node_modules/@cody-greene/eslint-config/strict.yml",
-    "env": {
-      "node": true,
-      "es6": true
-    }
+  "keywords": [
+    "build",
+    "cli",
+    "esbuild",
+    "incremental",
+    "live-reload",
+    "server",
+    "spawn",
+    "tool"
+  ],
+  "browser": "lib/client.js",
+  "main": "lib/server.js",
+  "scripts": {},
+  "peerDependencies": {
+    "esbuild": "^0.8.0"
   },
   "dependencies": {
-    "browserify": "^17.0.0",
     "chokidar": "^3.0.0",
     "connect-gzip-static": "^2.0.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "@cody-greene/eslint-config": "3.3.1",
-    "mocha": "^8.2.0"
+    "@cody-greene/eslint-config": "^3.3.2",
+    "eslint": "^7.20.0"
   }
 }
