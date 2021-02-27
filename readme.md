@@ -66,11 +66,11 @@ rum.addEventListener('reload', (evt) => {
     }
   }
 
-  // don't let rum refresh the page
+  // don't refresh the whole page
   evt.preventDefault()
 
   // Only the css was changed. Time for hot reload!
-  reloadCSS('index.css')
+  reloadCSS('/index.css')
 })
 
 /**
