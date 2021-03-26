@@ -4,7 +4,9 @@
   "license": "Unlicense",
   "version": "1.0.0",
   "files": [
-    "lib/"
+    "lib/",
+    "client.js",
+    "client.d.ts"
   ],
   "repository": {
     "type": "git",
@@ -20,7 +22,6 @@
     "spawn",
     "tool"
   ],
-  "browser": "lib/client.js",
   "main": "lib/server.js",
   "scripts": {},
   "peerDependencies": {
