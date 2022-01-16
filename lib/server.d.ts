@@ -1,4 +1,6 @@
 /* eslint-disable */
+import type {BuildOptions} from 'esbuild'
+
 interface EsthuluOptions {
   // Alternative way to set the http server port
   // default: random
@@ -26,9 +28,11 @@ interface EsthuluOptions {
   jobs?: Array<{cmd?: string, pattern?: string}>,
 
   // passed through to esbuild.build()
-  esbuildOptions: any
+  esbuildOptions: BuildOptions
 }
 
 declare function startServer(opt: EsthuluOptions): void
+declare function createDevMiddleware(opt: EsthuluOptions): void
 
 export default startServer
+export {createDevMiddleware}

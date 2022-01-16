@@ -2,7 +2,7 @@
   "name": "@cody-greene/esthulu",
   "description": "Combines esbuild with a webserver and a file watcher to automatically rebuild and refresh your web app",
   "license": "Unlicense",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "files": [
     "lib/",
     "client.js",
@@ -25,15 +25,15 @@
   "main": "lib/server.js",
   "scripts": {},
   "peerDependencies": {
-    "esbuild": "^0.8.0"
+    "esbuild": "~0.14.0"
   },
   "dependencies": {
     "chokidar": "^3.0.0",
-    "connect-gzip-static": "^2.0.0",
+    "serve-static": "^1.14.1",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "@cody-greene/eslint-config": "^3.3.2",
-    "eslint": "^7.20.0"
+    "@cody-greene/eslint-config": "^3.3.3",
+    "eslint": "^8.0.0"
   }
 }

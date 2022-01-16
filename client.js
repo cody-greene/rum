@@ -23,11 +23,11 @@ function log(msg) {
   }
 }
 
-function connect() {
+function connect(origin) {
   if (typeof EventSource === 'undefined') {
     log('EventSource not supported; auto-refresh disabled')
   } else if (!src) {
-    src = new EventSource(location.origin + '/.rum')
+    src = new EventSource((origin || window.location.origin) + '/.esthulu')
     log('auto-refresh enabled')
     src.addEventListener('reload', function (evt) {
       // application can use evt.preventDefault() to stop refreshing the page
@@ -41,7 +41,7 @@ function connect() {
       if (ok) {
         log('refreshing')
         src.close()
-        window.location.reload(true)
+        window.location.reload()
       }
     })
     src.addEventListener('build-error', function (evt) {
@@ -69,6 +69,6 @@ function disconnect() {
   }
 }
 
-connect()
+//connect()
 
 export default events
